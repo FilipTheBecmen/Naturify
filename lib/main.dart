@@ -1,0 +1,20 @@
+import 'package:flutter/material.dart';
+import 'package:naturify/splash_screen.dart';
+
+void main() {
+  runApp(const SplashScreenApp());
+}
+
+class SplashScreenApp extends StatefulWidget {
+  const SplashScreenApp({super.key});
+
+  @override
+  State<SplashScreenApp> createState() => _SplashScreenAppState();
+}
+
+class _SplashScreenAppState extends State<SplashScreenApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: SplashScreen());
+  }
+}
