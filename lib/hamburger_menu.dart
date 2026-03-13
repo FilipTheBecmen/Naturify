@@ -49,7 +49,22 @@ class HamburgerMenu extends StatelessWidget {
                 SizedBox(height: 10),
                 ListTile(
                   title: Text(
-                    'Übersicht',
+                    'Naturdenkmäler',
+                    style: GoogleFonts.poppins(
+                      fontSize: 24,
+                      // fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                SizedBox(height: 10),
+                ListTile(
+                  title: Text(
+                    'Geschützte Landschaftsteile',
                     style: GoogleFonts.poppins(
                       fontSize: 24,
                       // fontWeight: FontWeight.bold,
