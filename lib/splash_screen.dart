@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +15,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Timer? _timer;
-  List _items = [];
+
   @override
   void initState() {
     // executed when the widget is first created
@@ -36,15 +36,6 @@ class _SplashScreenState extends State<SplashScreen> {
     _timer?.cancel(); // Cancel the timer when disposing the widget
   }
 
-  Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/data.json');
-    final data = await json.decode(response);
-    setState(() {
-      print('Set state Function');
-      _items = data["items"];
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,12 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 200,
               height: 200,
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              readJson();
-            },
-            child: Center(child: Text("..number of items ${_items.length}")),
           ),
         ],
       ),

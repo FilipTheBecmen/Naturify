@@ -14,7 +14,16 @@ import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 
 class OpenStreetMapScreen extends StatefulWidget {
-  const OpenStreetMapScreen({super.key});
+  OpenStreetMapScreen({
+    super.key,
+    required this.mapController,
+    required this.onPressLocated,
+    required this.currentZoomValue,
+  });
+
+  final MapController mapController;
+  final void Function() onPressLocated;
+  double currentZoomValue;
 
   @override
   State<OpenStreetMapScreen> createState() {
@@ -25,27 +34,24 @@ class OpenStreetMapScreen extends StatefulWidget {
 class _OpenStreetMap extends State<OpenStreetMapScreen>
     with TickerProviderStateMixin {
   //
-  late final _animatedMapController;
+  // late final _animatedMapController;
 
-  @override
-  void initState() {
-    super.initState();
-    _animatedMapController = AnimatedMapController(
-      vsync: this,
-      duration: const Duration(microseconds: 500),
-      curve: Curves.easeInOut,
-      cancelPreviousAnimations: true,
-    );
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _animatedMapController = AnimatedMapController(
+  //     vsync: this,
+  //     duration: const Duration(microseconds: 500),
+  //     curve: Curves.easeInOut,
+  //     cancelPreviousAnimations: true,
+  //   );
+  // }
 
-  @override
-  void dispose() {
-    _animatedMapController.dispose();
-    super.dispose();
-  }
-
-  Position? currentPosition;
-  double _currentZoomValue = 10.0;
+  // @override
+  // void dispose() {
+  //   _animatedMapController.dispose();
+  //   super.dispose();
+  // }
 
   // final MapController _mapController = MapController(); // for moving and
 
@@ -54,10 +60,10 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
     return Stack(
       children: [
         FlutterMap(
-          mapController: _animatedMapController.mapController,
+          mapController: widget.mapController,
           options: MapOptions(
             initialCenter: LatLng(47.0707, 15.4395), // Open in Graz
-            initialZoom: _currentZoomValue,
+            initialZoom: widget.currentZoomValue,
           ),
           children: [
             TileLayer(
@@ -116,7 +122,7 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
           top: 30,
           right: 15,
           child: RawMaterialButton(
-            onPressed: _determinePosition,
+            onPressed: widget.onPressLocated,
 
             fillColor: const Color.fromARGB(255, 0, 191, 99),
             constraints: const BoxConstraints(minWidth: 56, minHeight: 56),
@@ -163,113 +169,28 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
           ),
         ),
       ],
-
-      // Align(
-      //   alignment: Alignment.bottomRight,
-      //   child: Padding(
-      //     padding: EdgeInsetsGeometry.only(top: 35, right: 15),
-      //     child: Column(
-      //       children: [
-      //         ElevatedButton(onPressed: () {}, child: Icon(Icons.plus_one)),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 
   void zoomIn() {
-    setState(() {
-      print('Zoom in');
-      _currentZoomValue = _currentZoomValue + 0.4;
+    print('Zoom in');
+    widget.currentZoomValue = widget.currentZoomValue + 0.4;
 
-      // _mapController.move(
-      //   _mapController.camera.center,
-      //   _currentZoomValue + 0.4,
-      // );
-      _animatedMapController.animateTo(
-        dest: _animatedMapController.mapController.camera.center,
-        zoom: _currentZoomValue,
-      );
-    });
+    widget.mapController.move(
+      widget.mapController.camera.center,
+      widget.currentZoomValue,
+    );
   }
 
   void zoomOut() {
     setState(() {
       print('Zoom out');
-      _currentZoomValue = _currentZoomValue - 0.4;
+      widget.currentZoomValue = widget.currentZoomValue - 0.4;
 
-      // _mapController.move(
-      //   _mapController.camera.center,
-      //   _currentZoomValue - 0.4,
-      // );
-
-      _animatedMapController.animateTo(
-        dest: _animatedMapController.mapController.camera.center,
-        zoom: _currentZoomValue,
+      widget.mapController.move(
+        widget.mapController.camera.center,
+        widget.currentZoomValue,
       );
     });
   }
-
-  void _determinePosition() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-
-    // Test if location services are enabled.
-
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      print('Location services are disabled');
-      return;
-    }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        print('Location permissions are denied');
-        return;
-        // your App should show an explanatory UI now.
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      print(
-        'Location permissions are permanently denied, we cannot request permissions.',
-      );
-
-      return;
-    }
-    Position position = await Geolocator.getCurrentPosition();
-
-    print('Current Position $position');
-    setState(() {
-      currentPosition = position;
-      _currentZoomValue = 15.0;
-
-      // _mapController.move(
-      //   LatLng(position.latitude, position.longitude),
-      //   _currentZoomValue,
-      // );
-      _animatedMapController.animateTo(
-        dest: LatLng(position.latitude, position.longitude),
-        zoom: _currentZoomValue,
-      );
-    });
-  }
-
-  void getLastKnownPosition() async {
-    Position? position = await Geolocator.getLastKnownPosition();
-  }
-
-  // void calculateDistance() {
-  //   double distanceInMeters = Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude)
-  // }
 }

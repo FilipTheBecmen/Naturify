@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:naturify/open_street_map_screen.dart';
 
 class HamburgerMenu extends StatelessWidget {
-  const HamburgerMenu({super.key});
+  const HamburgerMenu({super.key, required this.onPressLocated});
+
+  final void Function() onPressLocated;
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +46,10 @@ class HamburgerMenu extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.pop(context, true);
+                    print('Touched');
+
+                    onPressLocated();
                   },
                 ),
                 SizedBox(height: 10),
