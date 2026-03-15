@@ -3,13 +3,12 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:naturify/find_location_button.dart';
-import 'package:naturify/hamburger_menu.dart';
-import 'package:naturify/search_bar_class.dart';
+import 'package:naturify/screens/hamburger_menu.dart';
+import 'package:naturify/widgets/search_bar_class.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:location/location.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
-
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 
@@ -18,12 +17,14 @@ class OpenStreetMapScreen extends StatefulWidget {
     super.key,
     required this.mapController,
     required this.onPressLocated,
-    required this.currentZoomValue,
+    required this.onPressZoomIn,
+    required this.onPressZoomOut,
   });
 
   final MapController mapController;
   final void Function() onPressLocated;
-  double currentZoomValue;
+  final void Function() onPressZoomIn;
+  final void Function() onPressZoomOut;
 
   @override
   State<OpenStreetMapScreen> createState() {
@@ -63,7 +64,7 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
           mapController: widget.mapController,
           options: MapOptions(
             initialCenter: LatLng(47.0707, 15.4395), // Open in Graz
-            initialZoom: widget.currentZoomValue,
+            initialZoom: 10,
           ),
           children: [
             TileLayer(
@@ -139,7 +140,7 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
           child: Column(
             children: [
               RawMaterialButton(
-                onPressed: zoomIn,
+                onPressed: widget.onPressZoomIn,
 
                 fillColor: const Color.fromARGB(255, 0, 191, 99),
                 constraints: const BoxConstraints(minWidth: 56, minHeight: 56),
@@ -153,7 +154,7 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
               ),
               SizedBox(height: 5),
               RawMaterialButton(
-                onPressed: zoomOut,
+                onPressed: widget.onPressZoomOut,
 
                 fillColor: const Color.fromARGB(255, 0, 191, 99),
                 constraints: const BoxConstraints(minWidth: 56, minHeight: 56),
@@ -170,27 +171,5 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
         ),
       ],
     );
-  }
-
-  void zoomIn() {
-    print('Zoom in');
-    widget.currentZoomValue = widget.currentZoomValue + 0.4;
-
-    widget.mapController.move(
-      widget.mapController.camera.center,
-      widget.currentZoomValue,
-    );
-  }
-
-  void zoomOut() {
-    setState(() {
-      print('Zoom out');
-      widget.currentZoomValue = widget.currentZoomValue - 0.4;
-
-      widget.mapController.move(
-        widget.mapController.camera.center,
-        widget.currentZoomValue,
-      );
-    });
   }
 }

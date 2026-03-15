@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:naturify/open_street_map_screen.dart';
+import 'package:naturify/widgets/open_street_map_screen.dart';
+import 'package:naturify/screens/overview_page.dart';
 
 class HamburgerMenu extends StatelessWidget {
   const HamburgerMenu({super.key, required this.onPressLocated});
@@ -63,8 +64,11 @@ class HamburgerMenu extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OverviewPage()),
+                    );
                   },
                 ),
                 SizedBox(height: 10),

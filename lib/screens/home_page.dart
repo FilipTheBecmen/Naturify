@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:naturify/find_location_button.dart';
-import 'package:naturify/hamburger_menu.dart';
-import 'package:naturify/open_street_map_screen.dart';
-import 'package:naturify/search_bar_class.dart';
+import 'package:naturify/screens/hamburger_menu.dart';
+import 'package:naturify/widgets/open_street_map_screen.dart';
+import 'package:naturify/widgets/search_bar_class.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:naturify/find_location_button.dart';
@@ -16,12 +16,27 @@ import 'package:flutter/services.dart';
 class HomePage extends StatelessWidget {
   List _items = [];
   final mapController = MapController();
-  double _currentZoomValue = 10.0;
+  double _currentZoomValue = 10;
 
   Future<void> readJson() async {
     final String response = await rootBundle.loadString('assets/data.json');
     final data = await json.decode(response);
     _items = data["items"];
+  }
+
+  void zoomIn() {
+    print('Zoom in');
+    _currentZoomValue = _currentZoomValue + 0.4;
+
+    mapController.move(mapController.camera.center, _currentZoomValue);
+  }
+
+  void zoomOut() {
+    print('Zoom out');
+    _currentZoomValue = _currentZoomValue - 0.4;
+
+    mapController.move(mapController.camera.center, _currentZoomValue);
+    ;
   }
 
   @override
@@ -41,7 +56,8 @@ class HomePage extends StatelessWidget {
         child: OpenStreetMapScreen(
           mapController: mapController,
           onPressLocated: determinePosition,
-          currentZoomValue: _currentZoomValue,
+          onPressZoomIn: zoomIn,
+          onPressZoomOut: zoomOut,
         ),
       ),
     );
@@ -95,13 +111,5 @@ class HomePage extends StatelessWidget {
       LatLng(position.latitude, position.longitude),
       _currentZoomValue,
     );
-    // _animatedMapController.animateTo(
-    //   dest: LatLng(position.latitude, position.longitude),
-    //   zoom: _currentZoomValue,
-    // );
   }
-
-  // void getLastKnownPosition() async {
-  //   Position? position = await Geolocator.getLastKnownPosition();
-  // }
 }
