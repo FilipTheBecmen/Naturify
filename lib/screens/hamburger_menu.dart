@@ -12,7 +12,7 @@ class HamburgerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color.fromARGB(250, 0, 191, 99),
+      backgroundColor: const Color.fromARGB(255, 65, 136, 102),
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
       // space to fit everything.
@@ -27,10 +27,10 @@ class HamburgerMenu extends StatelessWidget {
                   height: 180,
                   child: const DrawerHeader(
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 0, 191, 99),
+                      color: const Color.fromARGB(255, 65, 136, 102),
                     ),
                     child: Image(
-                      image: AssetImage("assets/images/logo.png"),
+                      image: AssetImage("assets/images/logo4.png"),
                       width: 300,
                       height: 300,
                     ),
@@ -67,7 +67,13 @@ class HamburgerMenu extends StatelessWidget {
                     Navigator.pop(context);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OverviewPage()),
+                      MaterialPageRoute(
+                        builder: (context) => OverviewPage(
+                          pageTitle: 'Naturdenkmäler',
+                          childAspectRatioVal: 1.5,
+                          columns: 2,
+                        ),
+                      ),
                     );
                   },
                 ),
@@ -82,8 +88,17 @@ class HamburgerMenu extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OverviewPage(
+                          pageTitle: 'Geschützte Landschaftsteile',
+                          childAspectRatioVal: 3.6,
+                          columns: 1,
+                        ),
+                      ),
+                    );
                   },
                 ),
                 SizedBox(height: 10),

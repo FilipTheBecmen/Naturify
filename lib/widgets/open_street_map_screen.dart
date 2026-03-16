@@ -84,7 +84,7 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
             CurrentLocationLayer(
               style: const LocationMarkerStyle(
                 marker: DefaultLocationMarker(
-                  color: Color.fromARGB(255, 9, 166, 15),
+                  color: const Color.fromARGB(255, 65, 136, 102),
                   // child: Icon(
                   //   Icons.location_on_outlined,
                   //   color: Color.fromARGB(255, 255, 255, 255),
@@ -125,7 +125,7 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
           child: RawMaterialButton(
             onPressed: widget.onPressLocated,
 
-            fillColor: const Color.fromARGB(255, 0, 191, 99),
+            fillColor: const Color.fromARGB(255, 65, 136, 102),
             constraints: const BoxConstraints(minWidth: 56, minHeight: 56),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(3),
@@ -142,7 +142,7 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
               RawMaterialButton(
                 onPressed: widget.onPressZoomIn,
 
-                fillColor: const Color.fromARGB(255, 0, 191, 99),
+                fillColor: const Color.fromARGB(255, 65, 136, 102),
                 constraints: const BoxConstraints(minWidth: 56, minHeight: 56),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(3),
@@ -156,7 +156,7 @@ class _OpenStreetMap extends State<OpenStreetMapScreen>
               RawMaterialButton(
                 onPressed: widget.onPressZoomOut,
 
-                fillColor: const Color.fromARGB(255, 0, 191, 99),
+                fillColor: const Color.fromARGB(255, 65, 136, 102),
                 constraints: const BoxConstraints(minWidth: 56, minHeight: 56),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(3),
