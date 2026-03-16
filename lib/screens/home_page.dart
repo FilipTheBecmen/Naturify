@@ -7,7 +7,6 @@ import 'package:naturify/widgets/open_street_map_screen.dart';
 import 'package:naturify/widgets/search_bar_class.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:naturify/find_location_button.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -25,14 +24,12 @@ class HomePage extends StatelessWidget {
   }
 
   void zoomIn() {
-    print('Zoom in');
     _currentZoomValue = _currentZoomValue + 0.4;
 
     mapController.move(mapController.camera.center, _currentZoomValue);
   }
 
   void zoomOut() {
-    print('Zoom out');
     _currentZoomValue = _currentZoomValue - 0.4;
 
     mapController.move(mapController.camera.center, _currentZoomValue);
@@ -45,13 +42,13 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 120,
         title: const SearchBarClass(),
-        backgroundColor: const Color.fromARGB(255, 0, 191, 99),
+        backgroundColor: const Color.fromARGB(255, 65, 136, 102),
         iconTheme: const IconThemeData(
           color: Color.fromARGB(255, 251, 252, 252),
         ),
       ),
       drawer: HamburgerMenu(onPressLocated: determinePosition),
-      backgroundColor: const Color.fromARGB(255, 0, 191, 99),
+      backgroundColor: const Color.fromARGB(255, 65, 136, 102),
       body: Center(
         child: OpenStreetMapScreen(
           mapController: mapController,
