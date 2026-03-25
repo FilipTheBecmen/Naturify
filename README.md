@@ -4,3 +4,5 @@ Naturify is a mobile application developed using Flutter and Dart as part of a B
 Users can easily search for and discover nature conservation sites, gaining insights into their significance and location. The design and user experience of the app are guided by Nielsen’s usability heuristics, ensuring an intuitive, user-friendly interface and efficient navigation.
 
 Naturify combines modern mobile development practices with a strong emphasis on usability and sustainability, offering an engaging way to connect with local natural heritage.
+![WhatsApp Image 2026-03-16 at 14 56 58](https://github.com/user-attachments/assets/66a12514-cef5-4e89-87a9-0f2fb7b0c458)
+![WhatsApp Image 2026-03-17 at 13 56 37](https://github.com/user-attachments/assets/77194580-f218-4a44-8a74-d7799286da41)
